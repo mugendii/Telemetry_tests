@@ -1,0 +1,393 @@
+Metadata-Version: 2.2
+Name: openhtf
+Version: 1.6.1
+Summary: OpenHTF, the open hardware testing framework.
+Author: The OpenHTF Authors
+License: 
+                                         Apache License
+                                   Version 2.0, January 2004
+                                http://www.apache.org/licenses/
+        
+           TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+        
+           1. Definitions.
+        
+              "License" shall mean the terms and conditions for use, reproduction,
+              and distribution as defined by Sections 1 through 9 of this document.
+        
+              "Licensor" shall mean the copyright owner or entity authorized by
+              the copyright owner that is granting the License.
+        
+              "Legal Entity" shall mean the union of the acting entity and all
+              other entities that control, are controlled by, or are under common
+              control with that entity. For the purposes of this definition,
+              "control" means (i) the power, direct or indirect, to cause the
+              direction or management of such entity, whether by contract or
+              otherwise, or (ii) ownership of fifty percent (50%) or more of the
+              outstanding shares, or (iii) beneficial ownership of such entity.
+        
+              "You" (or "Your") shall mean an individual or Legal Entity
+              exercising permissions granted by this License.
+        
+              "Source" form shall mean the preferred form for making modifications,
+              including but not limited to software source code, documentation
+              source, and configuration files.
+        
+              "Object" form shall mean any form resulting from mechanical
+              transformation or translation of a Source form, including but
+              not limited to compiled object code, generated documentation,
+              and conversions to other media types.
+        
+              "Work" shall mean the work of authorship, whether in Source or
+              Object form, made available under the License, as indicated by a
+              copyright notice that is included in or attached to the work
+              (an example is provided in the Appendix below).
+        
+              "Derivative Works" shall mean any work, whether in Source or Object
+              form, that is based on (or derived from) the Work and for which the
+              editorial revisions, annotations, elaborations, or other modifications
+              represent, as a whole, an original work of authorship. For the purposes
+              of this License, Derivative Works shall not include works that remain
+              separable from, or merely link (or bind by name) to the interfaces of,
+              the Work and Derivative Works thereof.
+        
+              "Contribution" shall mean any work of authorship, including
+              the original version of the Work and any modifications or additions
+              to that Work or Derivative Works thereof, that is intentionally
+              submitted to Licensor for inclusion in the Work by the copyright owner
+              or by an individual or Legal Entity authorized to submit on behalf of
+              the copyright owner. For the purposes of this definition, "submitted"
+              means any form of electronic, verbal, or written communication sent
+              to the Licensor or its representatives, including but not limited to
+              communication on electronic mailing lists, source code control systems,
+              and issue tracking systems that are managed by, or on behalf of, the
+              Licensor for the purpose of discussing and improving the Work, but
+              excluding communication that is conspicuously marked or otherwise
+              designated in writing by the copyright owner as "Not a Contribution."
+        
+              "Contributor" shall mean Licensor and any individual or Legal Entity
+              on behalf of whom a Contribution has been received by Licensor and
+              subsequently incorporated within the Work.
+        
+           2. Grant of Copyright License. Subject to the terms and conditions of
+              this License, each Contributor hereby grants to You a perpetual,
+              worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+              copyright license to reproduce, prepare Derivative Works of,
+              publicly display, publicly perform, sublicense, and distribute the
+              Work and such Derivative Works in Source or Object form.
+        
+           3. Grant of Patent License. Subject to the terms and conditions of
+              this License, each Contributor hereby grants to You a perpetual,
+              worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+              (except as stated in this section) patent license to make, have made,
+              use, offer to sell, sell, import, and otherwise transfer the Work,
+              where such license applies only to those patent claims licensable
+              by such Contributor that are necessarily infringed by their
+              Contribution(s) alone or by combination of their Contribution(s)
+              with the Work to which such Contribution(s) was submitted. If You
+              institute patent litigation against any entity (including a
+              cross-claim or counterclaim in a lawsuit) alleging that the Work
+              or a Contribution incorporated within the Work constitutes direct
+              or contributory patent infringement, then any patent licenses
+              granted to You under this License for that Work shall terminate
+              as of the date such litigation is filed.
+        
+           4. Redistribution. You may reproduce and distribute copies of the
+              Work or Derivative Works thereof in any medium, with or without
+              modifications, and in Source or Object form, provided that You
+              meet the following conditions:
+        
+              (a) You must give any other recipients of the Work or
+                  Derivative Works a copy of this License; and
+        
+              (b) You must cause any modified files to carry prominent notices
+                  stating that You changed the files; and
+        
+              (c) You must retain, in the Source form of any Derivative Works
+                  that You distribute, all copyright, patent, trademark, and
+                  attribution notices from the Source form of the Work,
+                  excluding those notices that do not pertain to any part of
+                  the Derivative Works; and
+        
+              (d) If the Work includes a "NOTICE" text file as part of its
+                  distribution, then any Derivative Works that You distribute must
+                  include a readable copy of the attribution notices contained
+                  within such NOTICE file, excluding those notices that do not
+                  pertain to any part of the Derivative Works, in at least one
+                  of the following places: within a NOTICE text file distributed
+                  as part of the Derivative Works; within the Source form or
+                  documentation, if provided along with the Derivative Works; or,
+                  within a display generated by the Derivative Works, if and
+                  wherever such third-party notices normally appear. The contents
+                  of the NOTICE file are for informational purposes only and
+                  do not modify the License. You may add Your own attribution
+                  notices within Derivative Works that You distribute, alongside
+                  or as an addendum to the NOTICE text from the Work, provided
+                  that such additional attribution notices cannot be construed
+                  as modifying the License.
+        
+              You may add Your own copyright statement to Your modifications and
+              may provide additional or different license terms and conditions
+              for use, reproduction, or distribution of Your modifications, or
+              for any such Derivative Works as a whole, provided Your use,
+              reproduction, and distribution of the Work otherwise complies with
+              the conditions stated in this License.
+        
+           5. Submission of Contributions. Unless You explicitly state otherwise,
+              any Contribution intentionally submitted for inclusion in the Work
+              by You to the Licensor shall be under the terms and conditions of
+              this License, without any additional terms or conditions.
+              Notwithstanding the above, nothing herein shall supersede or modify
+              the terms of any separate license agreement you may have executed
+              with Licensor regarding such Contributions.
+        
+           6. Trademarks. This License does not grant permission to use the trade
+              names, trademarks, service marks, or product names of the Licensor,
+              except as required for reasonable and customary use in describing the
+              origin of the Work and reproducing the content of the NOTICE file.
+        
+           7. Disclaimer of Warranty. Unless required by applicable law or
+              agreed to in writing, Licensor provides the Work (and each
+              Contributor provides its Contributions) on an "AS IS" BASIS,
+              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+              implied, including, without limitation, any warranties or conditions
+              of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+              PARTICULAR PURPOSE. You are solely responsible for determining the
+              appropriateness of using or redistributing the Work and assume any
+              risks associated with Your exercise of permissions under this License.
+        
+           8. Limitation of Liability. In no event and under no legal theory,
+              whether in tort (including negligence), contract, or otherwise,
+              unless required by applicable law (such as deliberate and grossly
+              negligent acts) or agreed to in writing, shall any Contributor be
+              liable to You for damages, including any direct, indirect, special,
+              incidental, or consequential damages of any character arising as a
+              result of this License or out of the use or inability to use the
+              Work (including but not limited to damages for loss of goodwill,
+              work stoppage, computer failure or malfunction, or any and all
+              other commercial damages or losses), even if such Contributor
+              has been advised of the possibility of such damages.
+        
+           9. Accepting Warranty or Additional Liability. While redistributing
+              the Work or Derivative Works thereof, You may choose to offer,
+              and charge a fee for, acceptance of support, warranty, indemnity,
+              or other liability obligations and/or rights consistent with this
+              License. However, in accepting such obligations, You may act only
+              on Your own behalf and on Your sole responsibility, not on behalf
+              of any other Contributor, and only if You agree to indemnify,
+              defend, and hold each Contributor harmless for any liability
+              incurred by, or claims asserted against, such Contributor by reason
+              of your accepting any such warranty or additional liability.
+        
+           END OF TERMS AND CONDITIONS
+        
+           APPENDIX: How to apply the Apache License to your work.
+        
+              To apply the Apache License to your work, attach the following
+              boilerplate notice, with the fields enclosed by brackets "[]"
+              replaced with your own identifying information. (Don't include
+              the brackets!)  The text should be enclosed in the appropriate
+              comment syntax for the file format. We also recommend that a
+              file or class name and description of purpose be included on the
+              same "printed page" as the copyright notice for easier
+              identification within third-party archives.
+        
+           Copyright [yyyy] [name of copyright owner]
+        
+           Licensed under the Apache License, Version 2.0 (the "License");
+           you may not use this file except in compliance with the License.
+           You may obtain a copy of the License at
+        
+               http://www.apache.org/licenses/LICENSE-2.0
+        
+           Unless required by applicable law or agreed to in writing, software
+           distributed under the License is distributed on an "AS IS" BASIS,
+           WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+           See the License for the specific language governing permissions and
+           limitations under the License.
+        
+        
+        ===============================================================================
+        License for angular
+        ===============================================================================
+        The MIT License
+        
+        Copyright (c) 2010-2022 Google LLC. https://angular.io/license
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in
+        all copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+        THE SOFTWARE.
+Project-URL: Homepage, https://github.com/google/openhtf
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+License-File: AUTHORS
+Requires-Dist: attrs>=19.3.0
+Requires-Dist: colorama>=0.4.6
+Requires-Dist: contextlib2>=21.6.0
+Requires-Dist: inflection>=0.5.1
+Requires-Dist: google-auth>=1.34.0
+Requires-Dist: mutablerecords>=0.4.1
+Requires-Dist: protobuf>=5.28.2
+Requires-Dist: PyYAML>=6.0.2
+Requires-Dist: pyOpenSSL>=17.1.0
+Requires-Dist: requests>=2.27.1
+Requires-Dist: sockjs_tornado>=1.0.7
+Requires-Dist: tornado<6.5,>=6
+Requires-Dist: typing_extensions>=4.12.2
+Provides-Extra: usb-plugs
+Requires-Dist: libusb1>=3.1.0; extra == "usb-plugs"
+Requires-Dist: M2Crypto>=0.42.0; extra == "usb-plugs"
+Provides-Extra: update-units
+Requires-Dist: xlrd>=1.0.0; extra == "update-units"
+Provides-Extra: serial-collection-plug
+Requires-Dist: pyserial>=3.5; extra == "serial-collection-plug"
+Provides-Extra: examples
+Requires-Dist: pandas>=2.2.3; extra == "examples"
+
+**DISCLAIMER:** This is not an official Google product.
+
+# OpenHTF
+The open-source hardware testing framework.
+
+[![Build Status](https://github.com/google/openhtf/actions/workflows/build_and_deploy.yml/badge.svg?branch=master)](https://github.com/google/openhtf/actions?branch=master)
+[![Coverage Status](https://coveralls.io/repos/google/openhtf/badge.svg?branch=master&service=github)](https://coveralls.io/github/google/openhtf?branch=master)
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/google/openhtf.svg)](http://isitmaintained.com/project/google/openhtf "Percentage of issues still open")
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/google/openhtf.svg)](http://isitmaintained.com/project/google/openhtf "Average time to resolve an issue")
+
+## Overview
+OpenHTF is a Python library that provides a set of convenient abstractions
+designed to remove as much boilerplate as possible from hardware test setup and
+execution, so test engineers can focus primarily on test logic. It aspires to
+do so in a lightweight and minimalistic fashion. It is general enough to be
+useful in a variety of hardware testing scenarios, from the lab bench to the
+manufacturing floor.
+
+
+## Installing OpenHTF
+**NOTE:** We recommend using [virtualenv](https://virtualenv.pypa.io) to create
+an isolated Python environments for your projects, so as to protect system-wide
+Python packages the OS depends upon. The installation instructions assume you've
+_already_ created a virtualenv and activated it if you wish to do so.
+
+
+### Option 1: Installing via 'pip' (recommended)
+The most straightforward way to get the `openhtf` Python package into your
+Python environment is simply to install it via
+[pip](https://pypi.python.org/pypi). This will install the most recent
+production release.
+
+```bash
+pip install openhtf
+```
+
+
+### Option 2: Installing from Source
+If you want to install from source instead (for example, if you want some new
+feature that hasn't made it to the production release yet), you can download
+[the source code](https://github.com/google/openhtf) via
+[git](https://git-scm.com/) or other means, and install the `openhtf` package
+into your Python environment using the standard `setup.py` script.
+
+```bash
+python setup.py install
+```
+
+
+## Using OpenHTF
+The fastest way to get started is to take a look in the `examples/` directory,
+where you'll find sample test scripts and plugs. In addition, many of OpenHTF's
+modules are fairly well documented inline through the use of docstrings.
+
+Note: some of the `examples/` require protocol buffer code to be generated via
+`python setup.py build` command.  This requires protocol buffer compiler
+library to be installed
+([additional instructions](CONTRIBUTING.md#setting-up-your-dev-environment)).
+
+## Nomenclature
+OpenHTF uses certain nomenclature internally for several of its core concepts.
+Some of the more important terms are listed here for clarity.
+
+
+### DUT (Device Under Test)
+DUT refers to an individual piece of hardware being evaluated, exercised, or
+tested.
+
+
+### Test
+The top-level abstraction that OpenHTF deals with is the test. A test is just
+a series of steps performed on/with a DUT, usually along with some
+data-gathering or measurement steps. In the OpenHTF paradigm, tests are
+expressed as regular Python programs (.py files) that import and instantiate the
+'Test' class from the openhtf module. That way test code is as straightforward
+as possible to read and write. This also provides for the flexibility to do
+anything in a test that can normally be done in Python. Superficially, what
+distinguishes an OpenHTF test from any other Python program is that the OpenHTF
+test imports the openhtf package, instantiates the ```Test``` class, and calls
+its ```Execute()``` function. From there, OpenHTF manages the setup, execution,
+and teardown of the test, keeps track of anything gathered, and provides a
+pass/fail result.
+
+At times it may be necessary to disambiguate between different common readings
+of the word _test_. In such scenarios we use the following more precise terms:
+  
+  * **test run** - A single start-to-finish execution of a specific test.
+  * **test recipe** - A test definition that may be executed multiple times,
+    each time as a distinct test run.
+  * **test script** - A .py file that contains a test recipe.
+
+
+### Station
+_Stations_ capture the notion that a given test ran at some point and may run
+again. It loosely reflects the idea of physical test stations that process
+multiple DUTs over time. OpenHTF writes a breadcrumb to the filesystem (in a
+directory that can be set using the `--rundir` flag) each time a test runs, and
+all tests that have the same name are considered to be of the same station. This
+way the web frontend can display a consolidated list of known tests as a list of
+stations.
+
+
+### Phase
+OpenHTF tests are broken down into logical blocks called _phases_. Phases are no
+more than normal Python callables (usually functions) combined with the needed
+metadata. Writing an OpenHTF test is just a matter of writing a bunch of phase
+functions and specifying the order in which they should be executed.
+
+
+### Measurement
+OpenHTF gathers data about a DUT in the form of _measurements_. Usually,
+measurements are declared along with a specification that describes what
+constitutes a "passing" value. If OpenHTF finishes the test run and one or more
+measurements were out of that spec, the result of the whole test run will be
+considered a fail.
+
+
+### Attachment
+Sometimes may want to capture additional data that is more complex or free-form
+than a measurement. An _attachment_ can link arbitrary binary data to a
+test record, along with an optional MIME type.
+
+
+### Plug
+The essence of an OpenHTF test is to interact with a DUT to exercise it in
+various ways and observe the result. Sometimes this is done by communicating
+directly with the DUT, and other times it's done by communicating with a piece
+of test equipment to which the DUT is attached in some way. A _plug_ is a piece
+of code written to enable OpenHTF to interact with a particular type of hardware,
+whether that be a DUT itself or a piece of test equipment. OpenHTF comes
+packaged with a growing collection of useful plugs, but supports the
+creation of custom plugs as well.

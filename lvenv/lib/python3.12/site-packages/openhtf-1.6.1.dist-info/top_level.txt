@@ -1,0 +1,5 @@
+bin
+examples
+openhtf
+pylint_plugins
+test

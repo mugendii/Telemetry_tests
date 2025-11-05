@@ -1,0 +1,334 @@
+// Copyright 2016 Google Inc. All Rights Reserved.
+
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+
+//     http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// Explanation for commented out portions:
+// 'reserved' is syntax from proto3, but still useful to indicate field numbers
+// that must be avoided for backwards-compatibility.
+
+syntax = "proto2";
+
+package openhtf;
+
+import "google/protobuf/descriptor.proto";
+
+// import "assembly.proto";
+extend google.protobuf.EnumValueOptions {
+  // Field for storing an ANSI Unit-of-Measurement Code on an enum.
+  // go/ansiunits
+  optional string uom_code = 50508554;
+  optional string uom_suffix = 66336003;
+}
+
+
+// Tag identifying the type of informational data encoded in the info parameter.
+enum InformationTag {
+  // reserved 1;
+  JPG = 2;
+  PNG = 3;
+  WAV = 4;
+  TIFF = 8;
+  MP4 = 9;
+  AVI = 11; // Note "Next tag" below
+
+  // Indicates that this value is binary data with no real ability to display
+  // it in a UI.  This data is stored in value_binary.
+  BINARY = 5;
+
+  // Data is a gasp.TimeSeriesPb.
+  TIMESERIES = 6;
+
+  // Data is text, encoded in UTF-8
+  TEXT_UTF8 = 7;
+
+  // Data is a multi-dimensional JSON with TBD structure.
+  MULTIDIM_JSON = 10;
+  // Next tag = 12
+}
+
+
+// Status of a test run.
+enum Status {
+  // reserved 9;
+  PASS = 1;
+  FAIL = 2;
+  ERROR = 3;
+  RUNNING = 4;
+
+  CREATED = 5;
+  TIMEOUT = 6;
+  ABORTED = 7;
+  WAITING = 8;
+
+  CONSUME = 10;
+  RMA = 11;
+  REWORK = 12;
+  SCRAP = 13;
+  DEBUG = 14;
+  MARGINAL_PASS = 15;
+}
+
+
+// FailureCode's describe an error/failure occurred in a tester that we would
+// like to deal with in the xtf server to get a possible action for the person
+// doing the test to proceed. 'code' may be the exception name or a parameter
+// name. 'details' involve some possible more information which describes the
+// reason for failing.
+message FailureCode {
+  optional string code = 1;
+  optional string details = 2;
+}
+
+
+message TimeInfo {
+  optional int64 start_time_millis = 1;
+  optional int64 end_time_millis = 2;
+}
+
+message Timing {
+  optional string name = 1;
+  optional string description = 2;
+
+  optional TimeInfo time_info = 3;
+}
+
+message Phase {
+  optional string name = 1;
+  optional string description = 2;
+  repeated string capabilities = 3;
+
+  optional TimeInfo timing = 4;
+}
+
+// A parameter which is tested during a test run. These are parametric values
+// which are used to pass or fail the test.
+message TestParameter {
+  // reserved 9;
+  required string name = 1;
+  optional Status status = 2;
+  optional string description = 6;
+  optional bool important = 18;
+  // An optional tag, this parameter can be used to tag similar parameters
+  // simplifying selecting them via dremel and giving a frontend some sort of
+  // semantic when displaying them
+  optional string parameter_tag = 16;
+
+  // If this parameter is numeric then fill in these fields
+  optional double numeric_value = 11;
+  optional double numeric_minimum = 12;
+  optional double numeric_maximum = 13;
+
+  // Fields to determine numeric marginality which are used in RangeValidators.
+  optional double numeric_marginal_minimum = 26;
+  optional double numeric_marginal_maximum = 27;
+
+  // If this parameter is text then fill in these fields
+  optional string text_value = 14;
+  // This field may be a regular expression describing the expected value
+  optional string expected_text = 15;
+
+  optional bool is_optional = 17;
+  optional int64 set_time_millis = 19;
+  optional Units.UnitCode unit_code = 20;
+
+  // Created for visualization by UIs that don't support certain fancy
+  // parameters. UIs that do support them should hide these parameters.
+  optional string associated_attachment = 21;
+  // Next tag = 28
+
+  extensions 5000 to 5199;
+
+  reserved 25;
+}
+
+
+message TestRunLogMessage {
+  // The approximate level categories of a log message
+  // Corresponds to the python level name
+  enum Level {
+    DEBUG = 10;
+    INFO = 20;
+    WARNING = 30;
+    ERROR = 40;
+    CRITICAL = 50;
+  }
+
+  optional int64 timestamp_millis = 1;
+  optional string log_message = 2;
+  optional string logger_name = 3;
+
+  // The levelno should be a python level so
+  // DEBUG <= 10
+  // INFO <= 20
+  // WARNING <= 30
+  // ERROR <= 40
+  // CRITICAL/FATAL <= 50
+  optional int32 levelno = 4;
+  // Optional, levelno is the canonical source this is more for convenience.
+  optional Level level = 7;
+
+  optional string log_source = 5;
+  optional int32 lineno = 6;
+
+  // next tag 8
+}
+
+
+// A record of a test run including any parameters that were tested and if the
+// test passed, failed, or ended in an error.
+// NOTE: If you're interested in a 'unique-key' using dut_serial,
+// start_time_millis has been the unofficial strategy
+message TestRun {
+  // Next tag = 29;
+  // reserved 12, 14, 15, 16, 18, 20, 21;
+  /*
+   * The serial number of the device under test.  This is typically the omap
+   * serial number but in some tests is something else (elton serial or even
+   * the assembled device serial).
+   */
+  required string dut_serial = 1;
+
+  // The name of the tester where this run was started
+  required string tester_name = 2;
+  required TestInfo test_info = 3;
+  required Status test_status = 4 [default = CREATED];
+
+  optional int64 start_time_millis = 8;
+  optional int64 end_time_millis = 9;
+  // An optional name that can be given to a specific test run
+  optional string run_name = 10;
+
+  repeated TestParameter test_parameters = 5;
+  repeated InformationParameter info_parameters = 6;
+  // A list of log lines logged by a test
+  repeated TestRunLogMessage test_logs = 11;
+
+  // FailureCode's gather information about tester failure/errors.
+  repeated FailureCode failure_codes = 19;
+
+  // A field which (optionally) contains the name of the person conducting
+  // the test or otherwise responsible for the data.
+  optional string operator_name = 22;
+
+  // Not supported by OpenHTF.
+  // For non-serialized items, we can track them via lot_number and a part_id
+  // within the lot (such as "This try of items is lot #FOT123 and this is the
+  // part in slot 6 of the tray).  In this case, a unique dut should be
+  // synthesized and stored in the required field dut_serial, and the
+  // synthetic_dut flag should be set.
+  optional string lot_number = 23;
+  optional string part_id = 24;
+  optional bool synthetic_dut = 25;
+
+  // optional Assembly assembly = 26;
+  repeated Timing timings = 27;
+  repeated Phase phases = 28;
+
+  // The version of the test framework that created this test run
+  optional string framework_build = 17;
+}
+
+message TestInfo {
+  // Next tag = 6
+  // reserved 3, 4;
+  // The name of this test station (provided by Jabil)
+  required string name = 1;
+  optional string description = 2;
+  optional string version_string = 5;
+}
+
+// A parameter which is extra information from a test run.  These values are not
+// used to pass or fail a test but may be useful when inspecting data.
+message InformationParameter {
+  // reserved 2;
+  required string name = 1;
+
+  optional bytes value_binary = 7;
+
+  optional string description = 3;
+  optional int64 set_time_millis = 8;
+
+  // Practically required. This parameter can be used to tag similar parameters
+  // simplifying selecting them via dremel and giving a frontend some sort of
+  // semantic when displaying them
+  optional string parameter_tag = 5;
+
+  optional InformationTag type = 4 [default = TEXT_UTF8];
+
+  // next tag = 9
+}
+
+message Units {
+  /*
+    Units that can be used when specifying test parameters.
+
+    When adding a new unit, first look at the ANSI standard @ go/ansiunits.  If
+    your unit is there be sure to specify a uom_code using the code in the doc.
+    If it's not in the doc then don't specify a uom_code.
+
+    For suffix use either an SI suffix or something that people recognize since
+    it's usually geared towards displaying the unit in the UI.
+  */
+  enum UnitCode {
+    // Next tag = 82;
+    // NONE is the default, and for parameters which have no unit set.
+    NONE = 1;
+    PERCENT = 2 [(uom_code) = "P1", (uom_suffix) = "%"];
+    // NO_DIMENSION means that there are units set, but they cannot be
+    // expressed by a known dimension (such as a ratio)
+    NO_DIMENSION = 3 [(uom_code) = "NDL"];
+    PIXEL = 4 [(uom_code) = "PX", (uom_suffix) = "px"];
+    PIXEL_LEVEL = 5 [(uom_code) = "PXL"];
+
+    ROTATIONS_PER_MINUTE = 7 [(uom_code) = "RPM", (uom_suffix) = "rpm"];
+
+    SECOND = 10 [(uom_code) = "SEC", (uom_suffix) = "s"];
+    MHZ = 11 [(uom_code) = "MHZ", (uom_suffix) = "MHz"];
+    HERTZ = 12 [(uom_code) = "HTZ", (uom_suffix) = "Hz"];
+    MICROSECOND = 13 [(uom_code) = "B98", (uom_suffix) = "µs"];
+
+    MILLIMETER = 21 [(uom_code) = "MMT", (uom_suffix) = "mm"];
+    CENTIMETER = 22 [(uom_code) = "LC", (uom_suffix) = "cm"];
+    METER = 23 [(uom_code) = "MTR", (uom_suffix) = "m"];
+    PER_METER = 24 [(uom_code) = "M0R", (uom_suffix) = "m⁻¹"];
+    MILLILITER = 25 [(uom_code) = "MLT", (uom_suffix) = "mL"];
+    CUBIC_FOOT = 26 [(uom_code) = "MTQ", (uom_suffix) = "Ft³"];
+
+    DECIBEL = 30 [(uom_code) = "2N", (uom_suffix) = "dB"];
+    DECIBEL_MW = 31 [(uom_code) = "2N", (uom_suffix) = "dBmW"];
+
+    MICROAMP = 32 [(uom_code) = "B84", (uom_suffix) = "µA"];
+    MILLIAMP = 33 [(uom_code) = "4K", (uom_suffix) = "mA"];
+    MICROVOLT = 34 [(uom_code) = "D82", (uom_suffix) = "µV"];
+    VOLT = 35 [(uom_code) = "VLT", (uom_suffix) = "V"];
+    PICOFARAD = 36 [(uom_code) = "4T", (uom_suffix) = "pF"];
+    COULOMB = 37 [(uom_code) = "COU"];
+    MILLIVOLT = 38 [(uom_code) = "2Z", (uom_suffix) = "mV"];
+    WATT = 39 [(uom_code) = "WTT", (uom_suffix) = "W"];
+    AMPERE = 29 [(uom_code) = "AMP", (uom_suffix) = "A"];
+
+    DEGREE_CELSIUS = 40 [(uom_code) = "CEL", (uom_suffix) = "°C"];
+    KELVIN = 41 [(uom_code) = "KEL", (uom_suffix) = "K"];
+
+    BYTE = 50 [(uom_code) = "AD"];
+    MEGA_BYTES_PER_SECOND = 51 [(uom_code) = "MBPS",(uom_suffix) = "MB/s"];
+
+    DEGREE = 60 [(uom_code) = "DD", (uom_suffix) = "°"];
+    RADIAN = 61 [(uom_code) = "C81", (uom_suffix) = "rad"];
+
+    NEWTON = 70 [(uom_code) = "NEW", (uom_suffix) = "N"];
+
+    CUBIC_CENTIMETER_PER_SEC = 80 [(uom_code) = "2J", (uom_suffix) = "cm³/s"];
+    MILLIBAR = 81 [(uom_code) = "MBR", (uom_suffix) = "mbar"];
+  }
+}
